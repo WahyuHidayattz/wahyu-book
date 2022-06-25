@@ -1,0 +1,145 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="app.css" />
+    <title>Wahyubooks</title>
+</head>
+
+<body>
+    <div class="flex flex-col w-full min-h-screen bg-gray-100" id="container">
+        <!-- navbar -->
+        <div
+            class="sticky top-0 flex flex-row items-center justify-between px-4 py-3 bg-white border-b md:px-6 lg:px-12 xl:px-24 border-b-gray-200">
+            <span class="text-lg font-semibold text-sky-600">Wahyubooks</span>
+            <div class="flex flex-row items-center gap-3">
+                <button id="btn-clear"
+                    class="flex flex-row items-center gap-3 px-3 py-1.5 text-red-600 bg-red-100 rounded-md hover:bg-red-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    <span>Bersihkan Buku</span>
+                </button>
+                <a href="https://github.com/wahyuhidayattz" target="_blank"
+                    class="flex flex-row p-2 text-red-600 transition duration-200 rounded-full hover:bg-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- contents -->
+        <div
+            class="flex flex-col justify-start gap-6 px-4 py-4 md:grid md:grid-cols-2 md:px-6 lg:px-12 xl:px-24 md:items-start ">
+
+            <form id="form-add-books" class="overflow-hidden text-gray-700 bg-white rounded-lg shadow-lg">
+                <span class="flex flex-col px-6 py-4 font-semibold text-gray-800 border-b border-b-gray-200">
+                    Buat Buku
+                </span>
+                <div class="flex flex-col gap-4 px-6 py-4">
+                    <input id="input-title" type="text"
+                        class="w-full px-4 py-3 transition duration-200 border border-gray-300 rounded-md outline-none focus:ring focus:ring-sky-200 focus:border-sky-500"
+                        placeholder="Judul Buku" required autocomplete="off" />
+                    <input id="input-author" type="text"
+                        class="w-full px-4 py-3 transition duration-200 border border-gray-300 rounded-md outline-none focus:ring focus:ring-sky-200 focus:border-sky-500"
+                        placeholder="Penulis Buku" required autocomplete="off" />
+                    <input id="input-year" type="number"
+                        class="w-full px-4 py-3 transition duration-200 border border-gray-300 rounded-md outline-none focus:ring focus:ring-sky-200 focus:border-sky-500"
+                        placeholder="Tahun" required autocomplete="off" />
+                    <div class="flex flex-row items-center gap-3">
+                        <span>Selesai Dibaca</span>
+                        <input type="checkbox" name="" id="input-isread" />
+                    </div>
+                </div>
+                <button id="button-submit" name="submit" type="submit"
+                    class="flex flex-row items-center justify-center w-full gap-3 px-6 py-3 font-semibold text-white transition duration-200 rounded-none bg-sky-500 hover:bg-sky-400">
+                    Tambahkan Buku ini
+                </button>
+            </form>
+
+            <div class="flex flex-col gap-6">
+
+                <!-- filter items -->
+                <div
+                    class="flex flex-col items-start justify-between gap-2 px-6 py-4 overflow-hidden bg-white rounded-lg shadow-lg md:flex-row md:items-center md:gap-6">
+                    <span class="flex flex-row items-center gap-3 font-semibold text-gray-700 whitespace-nowrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Filter Item</span>
+                    <input type="text"
+                        class="border border-gray-300 rounded-md px-3 py-1.5 outline-none focus:ring focus:ring-sky-200 focus:border-sky-500  transition duration-200 w-full"
+                        placeholder="Filter judul buku..." onkeyup="filterData()" id="input-filter">
+                </div>
+
+                <div class="flex flex-col overflow-hidden bg-white rounded-lg shadow-lg">
+                    <span
+                        class="flex flex-col px-6 py-4 font-semibold text-gray-800 border-b border-b-gray-200 bg-sky-200">
+                        Rak Buku : Belum Dibaca
+                    </span>
+                    <div class="flex flex-col gap-3 px-6 py-4" id="book-unread">
+
+                        <!-- card components -->
+
+
+                    </div>
+                </div>
+
+                <div class="flex flex-col overflow-hidden bg-white rounded-lg shadow-lg">
+                    <span
+                        class="flex flex-col px-6 py-4 font-semibold text-gray-800 border-b border-b-gray-200 bg-lime-200">
+                        Rak Buku : Sudah Dibaca
+                    </span>
+                    <div class="flex flex-col gap-3 px-6 py-4" id="book-read">
+                        <!-- card components -->
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="flex flex-col items-center justify-center px-4 py-6 md:px-6 lg:px-12 xl:px-24">
+            <span class="text-sm text-center text-gray-700">Dibuat oleh Wahyu Hidayat dengan Tailwindcss</span>
+        </div>
+    </div>
+
+    <!-- snackbar -->
+    <div class="fixed top-0 left-0 right-0 flex flex-row px-6 py-3 text-white shadow-lg bg-slate-900" id="snackbar">
+        Data Berhasil
+        Ditambahkan</div>
+
+    <!-- alert notification -->
+    <div class="fixed top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center hidden px-6 py-6 bg-slate-800/60"
+        id="alert">
+        <div class="flex flex-col bg-white rounded-lg shadow-lg text-slate-800">
+            <span class="flex flex-col items-start justify-start px-6 py-4 font-semibold border-b border-b-gray-200">
+                Hapus Semua Data ?
+            </span>
+            <div class="flex flex-col items-center max-w-lg px-6 py-4">
+                Apa Kamu yakin akan membersihkan semua buku yang ada ? membersihkan artinya menghapus semua data buku
+                yang sudah kamu buat.
+            </div>
+            <div class="flex flex-row items-center justify-end gap-4 px-6 py-4 border-t border-t-gray-200">
+                <button class="flex flex-col px-4 py-2 rounded-md hover:bg-gray-200" id="btn-cancel">Batal</button>
+                <button class="flex flex-col px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-500"
+                    id="btn-oke">Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
